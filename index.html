@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hostel Mess Menu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🏠 Hostel Mess Menu</h1>
+    <p id="clock"></p>
+  </header>
+
+  <main class="container">
+    <section id="next-meal" class="card highlight"></section>
+    
+    <h2>🍴 Upcoming Meals (Today)</h2>
+    <ul id="upcoming-meals"></ul>
+    <p id="no-upcoming" class="note"></p>
+    
+    <h2>✅ Already Had (Today)</h2>
+    <ul id="past-meals"></ul>
+
+    <!-- Tomorrow Section -->
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleSection('tomorrow-section')">
+        Show Tomorrow's Meals ⬇
+      </button>
+      <div id="tomorrow-section" class="accordion-content"></div>
+    </div>
+
+    <!-- Weekly Schedule -->
+    <h2>📅 Weekly Schedule</h2>
+    <div id="weekly-schedule"></div>
+  </main>
+
+  
+
+  <script src="script.js"></script>
+</body>
+</html>
