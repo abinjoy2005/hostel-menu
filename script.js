@@ -1,4 +1,4 @@
-// Hostel Mess Schedule (from your chart)
+// Hostel Mess Schedule
 const schedule = {
   "Monday": [
     { meal: "Breakfast", time: "07:30", menu: "Idly + Coconut Chutney + Sambar + Tea" },
@@ -44,7 +44,7 @@ const schedule = {
   ]
 };
 
-// Utilities
+// Utility functions
 function getCurrentTimeMinutes() {
   const now = new Date();
   return now.getHours() * 60 + now.getMinutes();
@@ -55,7 +55,6 @@ function toMinutes(t) {
   return h * 60 + m;
 }
 
-// Main function
 function displayMeals() {
   const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const today = days[new Date().getDay()];
@@ -69,35 +68,30 @@ function displayMeals() {
   const nextMealDiv = document.getElementById("next-meal");
   const upcomingMealsList = document.getElementById("upcoming-meals");
   const pastMealsList = document.getElementById("past-meals");
-  const noUpcomingMsg = document.getElementById("no-upcoming");
   
   upcomingMealsList.innerHTML = "";
   pastMealsList.innerHTML = "";
-  noUpcomingMsg.innerText = "";
   
   let nextMealFound = false;
-  let hasUpcoming = false;
   
   mealsToday.forEach((item) => {
     const mealTime = toMinutes(item.time);
     const mealHTML = `<li class="card"><strong>${item.meal}</strong> - ${item.menu} (${item.time})</li>`;
     
     if (mealTime > currentTime && !nextMealFound) {
-      nextMealDiv.innerHTML = `<h2>🍽️ Your next food is ${item.meal}</h2><p>${item.menu} at ${item.time}</p>`;
+      nextMealDiv.innerHTML = `<h2>Your next food is ${item.meal}</h2><p>${item.menu} at ${item.time}</p>`;
       nextMealFound = true;
     } 
     
     if (mealTime > currentTime) {
-      hasUpcoming = true;
       upcomingMealsList.innerHTML += mealHTML;
     } else {
       pastMealsList.innerHTML += mealHTML;
     }
   });
   
-  if (!hasUpcoming) {
-    noUpcomingMsg.innerText = "🎉 You had all your meals today. Come again tomorrow!";
-    nextMealDiv.innerHTML = `<h2>All meals finished for today ✅</h2>`;
+  if (!nextMealFound) {
+    nextMealDiv.innerHTML = `<h2>All meals finished for today ✅</h2><p>You had all your meals today. Come again tomorrow! 🍴</p>`;
   }
   
   // Tomorrow section
@@ -138,14 +132,6 @@ function renderWeeklySchedule() {
   });
 }
 
-// Clock
-function updateClock() {
-  const now = new Date();
-  document.getElementById("clock").innerText = now.toLocaleTimeString();
-}
-
 displayMeals();
 renderWeeklySchedule();
-setInterval(displayMeals, 60000);
-setInterval(updateClock, 1000);
-updateClock();
+setInterval(displayMeals, 60000); // Update every minute
