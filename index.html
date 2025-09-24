@@ -7,35 +7,44 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Hostel Mess Menu (August 2025)</h1>
-    
-    <div id="next-meal" class="card highlight"></div>
-    
-    <h2>Upcoming Meals (Today)</h2>
-    <ul id="upcoming-meals"></ul>
-    
-    <h2>Already Had (Today)</h2>
-    <ul id="past-meals"></ul>
-
-    <!-- Tomorrow Section -->
-    <div class="accordion">
-      <button class="accordion-btn" onclick="toggleSection('tomorrow-section')">
-        Show Tomorrow's Meals ⬇
-      </button>
-      <div id="tomorrow-section" class="accordion-content"></div>
-    </div>
-
-    <!-- Weekly Schedule -->
-    <h2>Weekly Schedule</h2>
-    <div id="weekly-schedule"></div>
+  <!-- Splash Screen -->
+  <div id="splash-screen">
+    <h1 class="splash-text">ANNAMMA OND ELATHINUM....<br>PEDIKENDAAA...<br>POII FOOD KAZHIKK 🍲</h1>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>ANNAMMA PRODUCTIONS</p>
-  </footer>
-  
+  <!-- Main Content -->
+  <div id="main-content" class="hidden">
+    <div class="container">
+      <h1>Hostel Mess Menu (Dynamic)</h1>
+      <div id="clock" class="clock"></div>
+      
+      <div id="next-meal" class="card highlight animate-glow"></div>
+      
+      <h2>Upcoming Meals (Today)</h2>
+      <ul id="upcoming-meals" class="fade-list"></ul>
+      
+      <h2>Already Had (Today)</h2>
+      <ul id="past-meals" class="fade-list"></ul>
+
+      <!-- Tomorrow Section -->
+      <div class="accordion">
+        <button class="accordion-btn" onclick="toggleSection('tomorrow-section')">
+          Show Tomorrow's Meals ⬇
+        </button>
+        <div id="tomorrow-section" class="accordion-content fade-slide"></div>
+      </div>
+
+      <!-- Weekly Schedule -->
+      <h2>Weekly Schedule</h2>
+      <div id="weekly-schedule" class="fade-slide"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>ANNAMMA PRODUCTIONS</p>
+    </footer>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
