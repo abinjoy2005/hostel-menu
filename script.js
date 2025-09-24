@@ -1,4 +1,26 @@
-// Hostel Mess Schedule
+// Wait for page load
+window.addEventListener("load", () => {
+  const splash = document.getElementById("splash-screen");
+  const mainContent = document.getElementById("main-content");
+
+  setTimeout(() => {
+    splash.style.display = "none"; // hide splash
+    mainContent.classList.remove("hidden"); // show main
+    displayMeals(); // load meals after splash
+    renderWeeklySchedule();
+    updateClock();
+    setInterval(updateClock, 1000);
+  }, 3000); // 3 seconds
+});
+
+// ------------------- Clock -------------------
+function updateClock() {
+  const clock = document.getElementById("clock");
+  const now = new Date();
+  clock.textContent = now.toLocaleTimeString();
+}
+
+// ------------------- Meal Schedule -------------------
 const schedule = {
   "Monday": [
     { meal: "Breakfast", time: "07:30", menu: "Idly + Coconut Chutney + Sambar + Tea" },
@@ -44,7 +66,6 @@ const schedule = {
   ]
 };
 
-// Utility functions
 function getCurrentTimeMinutes() {
   const now = new Date();
   return now.getHours() * 60 + now.getMinutes();
@@ -74,9 +95,9 @@ function displayMeals() {
   
   let nextMealFound = false;
   
-  mealsToday.forEach((item) => {
+  mealsToday.forEach((item, i) => {
     const mealTime = toMinutes(item.time);
-    const mealHTML = `<li class="card"><strong>${item.meal}</strong> - ${item.menu} (${item.time})</li>`;
+    const mealHTML = `<li class="card" style="animation-delay:${i*0.2}s"><strong>${item.meal}</strong> - ${item.menu} (${item.time})</li>`;
     
     if (mealTime > currentTime && !nextMealFound) {
       nextMealDiv.innerHTML = `<h2>Your next food is ${item.meal}</h2><p>${item.menu} at ${item.time}</p>`;
@@ -97,14 +118,14 @@ function displayMeals() {
   // Tomorrow section
   const tomorrowSection = document.getElementById("tomorrow-section");
   tomorrowSection.innerHTML = `<h3>${tomorrow}</h3><ul>` + 
-    mealsTomorrow.map(m => `<li class="card"><strong>${m.meal}</strong> - ${m.menu} (${m.time})</li>`).join("") 
+    mealsTomorrow.map((m, i) => `<li class="card" style="animation-delay:${i*0.2}s"><strong>${m.meal}</strong> - ${m.menu} (${m.time})</li>`).join("") 
     + "</ul>";
 }
 
 // Toggle accordion
 function toggleSection(id) {
   const section = document.getElementById(id);
-  section.style.display = section.style.display === "block" ? "none" : "block";
+  section.classList.toggle("show");
 }
 
 // Weekly schedule
@@ -118,20 +139,17 @@ function renderWeeklySchedule() {
     btn.innerText = day + " ⬇";
     btn.onclick = () => {
       const content = document.getElementById("week-" + day);
-      content.style.display = content.style.display === "block" ? "none" : "block";
+      content.classList.toggle("show");
     };
     
     const contentDiv = document.createElement("div");
     contentDiv.id = "week-" + day;
     contentDiv.className = "accordion-content";
-    contentDiv.innerHTML = "<ul>" + schedule[day].map(m => 
-      `<li class="card"><strong>${m.meal}</strong> - ${m.menu} (${m.time})</li>`).join("") + "</ul>";
+    contentDiv.innerHTML = "<ul>" + schedule[day].map((m, i) => 
+      `<li class="card" style="animation-delay:${i*0.2}s"><strong>${m.meal}</strong> - ${m.menu} (${m.time})</li>`).join("") + "</ul>";
     
     weeklyDiv.appendChild(btn);
     weeklyDiv.appendChild(contentDiv);
   });
 }
 
-displayMeals();
-renderWeeklySchedule();
-setInterval(displayMeals, 60000); // Update every minute
