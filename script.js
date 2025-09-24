@@ -1,4 +1,4 @@
-// Wait for page load
+// Splash Screen
 window.addEventListener("load", () => {
   const splash = document.getElementById("splash-screen");
   const mainContent = document.getElementById("main-content");
@@ -10,10 +10,10 @@ window.addEventListener("load", () => {
     renderWeeklySchedule();
     updateClock();
     setInterval(updateClock, 1000);
-  }, 3000); // 3 seconds splash
+  }, 3000);
 });
 
-// Sample meals (replace with your real hostel chart)
+// Sample meals
 const meals = {
   today: [
     { time: "08:00", name: "Breakfast - Idli & Sambar" },
@@ -28,16 +28,17 @@ const meals = {
     { time: "20:00", name: "Dinner - Rice & Sambar" }
   ],
   weekly: {
-    Monday: ["Breakfast - Poori", "Lunch - Rice & Fish", "Dinner - Chapathi"],
-    Tuesday: ["Breakfast - Dosa", "Lunch - Veg Meals", "Dinner - Fried Rice"],
-    Wednesday: ["Breakfast - Upma", "Lunch - Biriyani", "Dinner - Idli"],
-    Thursday: ["Breakfast - Appam", "Lunch - Rice & Chicken", "Dinner - Noodles"],
-    Friday: ["Breakfast - Parotta", "Lunch - Veg Curry", "Dinner - Dosa"],
-    Saturday: ["Breakfast - Idiyappam", "Lunch - Rice & Egg", "Dinner - Chapathi"],
-    Sunday: ["Breakfast - Dosa", "Lunch - Fish Curry", "Dinner - Fried Rice"]
+    Monday: ["Breakfast - Poori", "Lunch - Rice & Fish", "Tea - Biscuits", "Dinner - Chapathi"],
+    Tuesday: ["Breakfast - Dosa", "Lunch - Veg Meals", "Tea - Vada", "Dinner - Fried Rice"],
+    Wednesday: ["Breakfast - Upma", "Lunch - Biriyani", "Tea - Samosa", "Dinner - Idli"],
+    Thursday: ["Breakfast - Appam", "Lunch - Rice & Chicken", "Tea - Banana Fry", "Dinner - Noodles"],
+    Friday: ["Breakfast - Parotta", "Lunch - Veg Curry", "Tea - Biscuit", "Dinner - Dosa"],
+    Saturday: ["Breakfast - Idiyappam", "Lunch - Rice & Egg", "Tea - Cake", "Dinner - Chapathi"],
+    Sunday: ["Breakfast - Dosa", "Lunch - Fish Curry", "Tea - Cutlet", "Dinner - Fried Rice"]
   }
 };
 
+// Show today's meals
 function displayMeals() {
   const now = new Date();
   const currentTime = now.getHours() * 60 + now.getMinutes();
@@ -57,12 +58,8 @@ function displayMeals() {
   meals.today.forEach(meal => {
     const [h, m] = meal.time.split(":").map(Number);
     const mealMinutes = h * 60 + m;
-
-    if (mealMinutes > currentTime) {
-      upcoming.push(meal);
-    } else {
-      past.push(meal);
-    }
+    if (mealMinutes > currentTime) upcoming.push(meal);
+    else past.push(meal);
   });
 
   if (upcoming.length > 0) {
@@ -85,6 +82,7 @@ function displayMeals() {
   });
 }
 
+// Tomorrow meals toggle
 function toggleSection(id) {
   const section = document.getElementById(id);
   section.style.display = section.style.display === "block" ? "none" : "block";
@@ -99,6 +97,7 @@ function toggleSection(id) {
   }
 }
 
+// Weekly schedule toggle
 function renderWeeklySchedule() {
   const weeklyDiv = document.getElementById("weekly-schedule");
   weeklyDiv.innerHTML = "";
@@ -108,12 +107,14 @@ function renderWeeklySchedule() {
     btn.className = "accordion-btn";
     btn.textContent = day;
     btn.onclick = () => {
-      const contentId = `${day}-meals`;
-      let content = document.getElementById(contentId);
+      let content = document.getElementById(`${day}-meals`);
+      
+      // Hide all other days first
+      document.querySelectorAll(".accordion-content").forEach(c => c.style.display = "none");
 
       if (!content) {
         content = document.createElement("div");
-        content.id = contentId;
+        content.id = `${day}-meals`;
         content.className = "accordion-content";
         meals.weekly[day].forEach(meal => {
           const p = document.createElement("p");
@@ -122,14 +123,17 @@ function renderWeeklySchedule() {
         });
         weeklyDiv.appendChild(content);
       }
-      content.style.display = content.style.display === "block" ? "none" : "block";
+      
+      content.style.display = "block";
     };
     weeklyDiv.appendChild(btn);
   });
 }
 
+// Clock
 function updateClock() {
   const clock = document.getElementById("clock");
   const now = new Date();
   clock.textContent = now.toLocaleTimeString();
 }
+
