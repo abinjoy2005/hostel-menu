@@ -10,7 +10,6 @@
   z-index: 9999;
   animation: splashFadeOut 3s forwards;
 }
-
 .splash-text {
   font-size: 2rem;
   text-align: center;
@@ -18,8 +17,6 @@
   font-weight: bold;
   animation: splashTextAnim 2s ease-in-out infinite alternate;
 }
-
-/* Hide main content initially */
 .hidden { display: none; }
 
 /* Splash Animations */
@@ -63,9 +60,7 @@ h1 {
 }
 .card:hover { transform: scale(1.05); }
 .highlight { border-left: 5px solid #3498db; }
-.animate-glow {
-  animation: glow 2s infinite alternate;
-}
+.animate-glow { animation: glow 2s infinite alternate; }
 @keyframes glow {
   from { box-shadow: 0 0 5px #3498db; }
   to { box-shadow: 0 0 20px #8e44ad; }
@@ -83,11 +78,11 @@ h1 {
   animation: fadeIn 1.5s ease-in;
 }
 
-/* Accordion */
+/* Accordion Buttons */
 .accordion-btn {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
+  margin: 8px 0;
   background: #3498db;
   color: white;
   border: none;
@@ -97,10 +92,12 @@ h1 {
   transition: background 0.3s;
 }
 .accordion-btn:hover { background: #2ecc71; }
+
+/* Accordion Content */
 .accordion-content {
   display: none;
   background: #ecf0f1;
-  padding: 10px;
+  padding: 12px;
   margin-top: 5px;
   border-radius: 8px;
 }
